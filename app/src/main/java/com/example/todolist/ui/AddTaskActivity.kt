@@ -1,7 +1,6 @@
 package com.example.todolist.ui
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.example.todolist.databinding.ActivityAddTaskBinding
 import com.example.todolist.datasource.TaskDataSource
@@ -68,7 +67,7 @@ class AddTaskActivity: AppCompatActivity() {
                 hour = binding.inputHour.text
             )
             TaskDataSource.insertTask(task)
-            Log.e("TAG","insertListener" + TaskDataSource.getList())
+            finish()
         }
     }
 }

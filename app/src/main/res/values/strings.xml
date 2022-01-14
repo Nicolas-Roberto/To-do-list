@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">To do list</string>
+    <string name="labelTaskName">Nome da tarefa</string>
+    <string name="labelTaskDescription">Descrição</string>
+    <string name="labelHour">Hora</string>
+    <string name="labelData">Data</string>
+    <string name="labelCancel">Cancelar</string>
+    <string name="labelNewTask">Criar Tarefa</string>
+    <string name="labelTasks">Tarefas</string>
+    <string name="labelDescriptionNewTask">Nova tarefa</string>
 </resources>
