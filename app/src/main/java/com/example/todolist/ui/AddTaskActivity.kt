@@ -1,5 +1,6 @@
 package com.example.todolist.ui
 
+import android.app.Activity
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.todolist.databinding.ActivityAddTaskBinding
@@ -8,10 +9,8 @@ import com.example.todolist.extensions.format
 import com.example.todolist.extensions.text
 import com.example.todolist.model.Task
 import com.google.android.material.datepicker.MaterialDatePicker
-import com.google.android.material.datepicker.MaterialTextInputPicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
-import kotlinx.android.synthetic.main.activity_add_task.*
 import java.util.*
 
 class AddTaskActivity: AppCompatActivity() {
@@ -43,8 +42,8 @@ class AddTaskActivity: AppCompatActivity() {
                 .setTimeFormat(TimeFormat.CLOCK_24H)
                 .build()
             timePicker.addOnPositiveButtonClickListener{
-                val hour = if(timePicker.hour in 0..9) "0${timePicker}" else timePicker.hour
-                val minute = if(timePicker.minute in 0..9) "0${timePicker}" else timePicker.minute
+                val hour = if(timePicker.hour in 0..9) "0${timePicker.hour}" else timePicker.hour
+                val minute = if(timePicker.minute in 0..9) "0${timePicker.minute}" else timePicker.minute
 
                 binding.inputHour.text = "$hour:$minute"
             }
@@ -67,6 +66,8 @@ class AddTaskActivity: AppCompatActivity() {
                 hour = binding.inputHour.text
             )
             TaskDataSource.insertTask(task)
+
+            setResult(Activity.RESULT_OK)
             finish()
         }
     }

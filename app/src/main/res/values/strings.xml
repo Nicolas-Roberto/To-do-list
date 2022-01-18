@@ -8,4 +8,6 @@
     <string name="labelNewTask">Criar Tarefa</string>
     <string name="labelTasks">Tarefas</string>
     <string name="labelDescriptionNewTask">Nova tarefa</string>
+    <string name="label_edit">Editar</string>
+    <string name="label_delete">Deletar</string>
 </resources>
