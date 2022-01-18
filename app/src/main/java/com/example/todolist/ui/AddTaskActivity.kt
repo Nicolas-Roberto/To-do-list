@@ -23,6 +23,16 @@ class AddTaskActivity: AppCompatActivity() {
         binding = ActivityAddTaskBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        if (intent.hasExtra(TASK_ID)) {
+            val taskId = intent.getIntExtra(TASK_ID, 0)
+            TaskDataSource.findById(taskId)?.let {
+                binding.inputTitle.text = it.title
+                binding.inputDescription.text = it.description
+                binding.inputDate.text = it.date
+                binding.inputHour.text = it.hour
+            }
+        }
+
         insertListeners()
     }
 
@@ -63,12 +73,16 @@ class AddTaskActivity: AppCompatActivity() {
                 title = binding.inputTitle.text,
                 description = binding.inputDescription.text,
                 date = binding.inputDate.text,
-                hour = binding.inputHour.text
+                hour = binding.inputHour.text,
+                id = intent.getIntExtra(TASK_ID, 0)
             )
             TaskDataSource.insertTask(task)
 
             setResult(Activity.RESULT_OK)
             finish()
         }
+    }
+    companion object {
+        const val TASK_ID = "task_id"
     }
 }

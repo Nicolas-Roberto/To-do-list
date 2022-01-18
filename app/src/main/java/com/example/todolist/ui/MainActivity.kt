@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import com.example.todolist.databinding.ActivityMainBinding
 import com.example.todolist.datasource.TaskDataSource
@@ -18,6 +19,9 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.rvTasks.adapter = adapter
+        updateList()
+
         insertListeners()
     }
 
@@ -26,8 +30,16 @@ class MainActivity : AppCompatActivity() {
     ) {
         if (it.resultCode == RESULT_OK) {
                 binding.rvTasks.adapter = adapter
-                adapter.submitList(TaskDataSource.getList())
+                updateList()
         }
+    }
+
+    private fun updateList() {
+        val list = TaskDataSource.getList()
+            binding.includeEmpty.emptyState.visibility = if(list.isEmpty()) View.VISIBLE
+            else View.GONE
+
+        adapter.submitList(list)
     }
 
     private fun insertListeners() {
@@ -37,10 +49,15 @@ class MainActivity : AppCompatActivity() {
             }
         }
         adapter.listenerEdit = {
-            Log.e("TAG","listenerEdit $it")
+            val intent = Intent(this, AddTaskActivity::class.java)
+            intent.putExtra(AddTaskActivity.TASK_ID, it.id)
+            intent.let {
+                register.launch(it)
+            }
         }
         adapter.listenerDelete = {
-            Log.e("TAG","listenerDelete $it")
+            TaskDataSource.deleteTask(it)
+            updateList()
         }
     }
 }
